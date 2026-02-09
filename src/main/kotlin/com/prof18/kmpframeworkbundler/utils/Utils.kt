@@ -10,10 +10,10 @@ internal const val PLUGIN_TASKS_GROUP = "kmp-framework-bundler"
 
 internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirPath: String, commandList: List<String>): String {
     return ByteArrayOutputStream().use { outputStream ->
-        project.exec {
-            workingDir = File(workingDirPath)
-            commandLine(commandList)
-            standardOutput = outputStream
+        project.exec { spec ->
+            spec.workingDir = File(workingDirPath)
+            spec.commandLine(commandList)
+            spec.standardOutput = outputStream
         }
         val output = outputStream.toString()
         if (showOutput) {
@@ -25,10 +25,10 @@ internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirPa
 
 internal fun Project.executeBashCommand(showOutput: Boolean = true, workingDirFile: File, commandList: List<String>): String {
     return ByteArrayOutputStream().use { outputStream ->
-        project.exec {
-            workingDir = workingDirFile
-            commandLine(commandList)
-            standardOutput = outputStream
+        project.exec { spec ->
+            spec.workingDir = workingDirFile
+            spec.commandLine(commandList)
+            spec.standardOutput = outputStream
         }
         val output = outputStream.toString()
         if (showOutput) {
